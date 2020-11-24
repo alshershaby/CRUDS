@@ -1,9 +1,22 @@
- let nameInput = document.getElementById("name");
+// start regex 
+// let regex = /^[A-Z][a-z]{3,6}$/;
+
+// let prodName = "Toshibaa";
+// if(regex.test(prodName) == true){
+// console.log("valid"); 
+// }else{
+//     console.log("alaai");
+// }
+ 
+// start main 
+let nameInput = document.getElementById("name");
 let priceInput = document.getElementById("price");
 let cateInput = document.getElementById("cate");
 let descInput = document.getElementById("desc");
 let searchInput = document.getElementById("searchInput");
 let adderBtn = document.getElementById("adder");
+
+let productNameAlert = document.getElementById('prodNameAlert');
 
 let tbody = document.getElementById("tablebody");
 let productList;
@@ -36,8 +49,8 @@ clear();
 function displayProducts(anyArray){
     // date 
     let dailyDate = new Date();
-    let days = dailyDate.getDate();
-    let months = dailyDate.getMonth()+1;
+    let days = dailyDate.getDate().toString();
+    let months = (dailyDate.getMonth()+1).toString();
     // 
     let container = "";
     for(let i = 0 ; i < anyArray.length;i++){
@@ -92,3 +105,41 @@ function searchProducts(){
     displayProducts(neededProduct);
 
 }
+
+
+// start validation 
+function validateProName(prodName){
+    let regex = /^[A-Z][a-z]{3,7}$/;
+    if(regex.test(prodName)==true){
+        nameInput.classList.remove("is-invalid");
+        nameInput.classList.add("is-valid");
+        productNameAlert.classList.add("d-none");
+    }else{
+        nameInput.classList.remove("is-valid");
+        nameInput.classList.add("is-invalid");
+        productNameAlert.classList.remove("d-none");
+    }
+}
+
+nameInput.addEventListener('keyup',function(){
+    validateProName(nameInput.value);
+});
+
+// validating price not to be more than 10000 
+
+function validateProPrice(ProdPrice){
+    let regex = /^([1-9][0-9]{2,3}|10000)$/;
+    if(regex.test(ProdPrice)==true){
+        priceInput.classList.remove("is-invalid");
+        priceInput.classList.add("is-valid");
+        prodPriceAlert.classList.add("d-none");
+    }else{
+        priceInput.classList.remove("is-valid");
+        priceInput.classList.add("is-invalid");
+        prodPriceAlert.classList.remove("d-none");
+    }
+}
+
+priceInput.addEventListener('keyup',function(){
+    validateProPrice(priceInput.value);
+});
